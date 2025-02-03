@@ -10,13 +10,13 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
     jwt.expiration_time = 1.day.to_i
     jwt.dispatch_requests = [
-      ['POST', %r{^/api/v1/users/sign_in$}]
+      ['POST', %r{^/api/v1/users/login$}]
     ]
     jwt.revocation_requests = [
-      ['DELETE', %r{^/api/v1/users/sign_out$}]
+      ['DELETE', %r{^/api/v1/users/logout$}]
     ]
     jwt.request_formats = { user: [:json] }
   end
