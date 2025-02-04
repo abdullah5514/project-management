@@ -1,5 +1,7 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  get 'pages/index'
+  root 'pages#index'
   namespace :api do
     namespace :v1 do
       post 'login', to: 'auth#create'
