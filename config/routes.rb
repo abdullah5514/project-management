@@ -13,8 +13,10 @@ Rails.application.routes.draw do
       end
 
       # User endpoints
+      resources :users, only: [] do
+        get :assigned_projects, on: :collection
+      end
       resources :tasks, only: [:create]
-      get 'my_projects', to: 'projects#assigned_projects'
     end
   end
 end
