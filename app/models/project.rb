@@ -1,6 +1,9 @@
 class Project < ApplicationRecord
-  has_many :tasks
+
   validates :name, :start_date, :duration, presence: true
+
+  has_many :tasks
+  has_and_belongs_to_many :users
 
   def end_date
     duration = self.duration.split(' ')

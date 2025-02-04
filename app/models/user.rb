@@ -7,9 +7,12 @@ class User < ApplicationRecord
 
   validates :name, :email, presence: true
 
+  has_and_belongs_to_many :projects
+
   def jwt_payload
     {
       user_id: id,
+      jti: SecureRandom.uuid,
       role: role,
       exp: 24.hours.from_now.to_i
     }
@@ -31,6 +34,7 @@ class User < ApplicationRecord
   def revoke_jwt(token)
     decoded_token = decode_jwt(token)
     exp = decoded_token['exp']
-    JwtBlacklist.create!(jti: id, exp: Time.at(exp))
+    jti = decoded_token['jti']
+    JwtBlacklist.create!(jti: jti, exp: Time.at(exp))
   end
 end
