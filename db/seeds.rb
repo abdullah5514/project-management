@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 # Create Admin and Regular Users
-puts "Creating Users..."
+puts 'Creating Users...'
 
 admin = User.create!(
   name: 'Admin User',
@@ -28,7 +30,7 @@ user2 = User.create!(
 puts "Created #{User.count} users."
 
 # Create Projects with varying start dates and durations
-puts "Creating Projects..."
+puts 'Creating Projects...'
 
 project1 = Project.create!(
   name: 'Website Redesign',
@@ -51,7 +53,7 @@ project3 = Project.create!(
 puts "Created #{Project.count} projects."
 
 # Assign Projects to Users
-puts "Assigning Users to Projects..."
+puts 'Assigning Users to Projects...'
 
 project1.users << admin
 project1.users << user1
@@ -61,13 +63,13 @@ project2.users << user2
 
 project3.users << user1
 
-puts "Assigned users to projects."
+puts 'Assigned users to projects.'
 
 # Create Tasks for each Project
-puts "Creating Tasks..."
+puts 'Creating Tasks...'
 
 # Tasks for Website Redesign
-task1 = project1.tasks.create!(
+project1.tasks.create!(
   name: 'Homepage Design',
   description: 'Design the homepage layout and structure.',
   start_time: DateTime.parse('2025-02-02 09:00:00'),
@@ -75,7 +77,7 @@ task1 = project1.tasks.create!(
   user: user1
 )
 
-task2 = project1.tasks.create!(
+project1.tasks.create!(
   name: 'Backend Setup',
   description: 'Setup the initial backend environment for the website.',
   start_time: DateTime.parse('2025-02-03 10:00:00'),
@@ -84,7 +86,7 @@ task2 = project1.tasks.create!(
 )
 
 # Tasks for Mobile App Development
-task3 = project2.tasks.create!(
+project2.tasks.create!(
   name: 'Mobile UI Design',
   description: 'Create the design of the mobile app.',
   start_time: DateTime.parse('2025-01-20 10:00:00'),
@@ -92,7 +94,7 @@ task3 = project2.tasks.create!(
   user: user2
 )
 
-task4 = project2.tasks.create!(
+project2.tasks.create!(
   name: 'API Development',
   description: 'Develop the API for the mobile app.',
   start_time: DateTime.parse('2025-01-25 15:00:00'),
@@ -101,7 +103,7 @@ task4 = project2.tasks.create!(
 )
 
 # Tasks for Database Migration
-task5 = project3.tasks.create!(
+project3.tasks.create!(
   name: 'Database Schema Update',
   description: 'Update the database schema to support new features.',
   start_time: DateTime.parse('2025-03-02 08:00:00'),
@@ -111,4 +113,4 @@ task5 = project3.tasks.create!(
 
 puts "Created #{Task.count} tasks."
 
-puts "Seeding completed!"
+puts 'Seeding completed!'

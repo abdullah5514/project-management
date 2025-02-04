@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Task < ApplicationRecord
   belongs_to :project
   belongs_to :user
@@ -8,10 +10,10 @@ class Task < ApplicationRecord
   end
 
   def formatted_start_time
-    start_time.strftime("%I:%M %p, %b %d")
+    start_time.strftime('%I:%M %p, %b %d')
   end
 
   def formatted_end_time
-    end_time.strftime("%I:%M %p, %b %d")
+    end_time.strftime('%I:%M %p, %b %d')
   end
 end

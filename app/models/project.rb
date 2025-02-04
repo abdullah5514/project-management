@@ -1,5 +1,6 @@
-class Project < ApplicationRecord
+# frozen_string_literal: true
 
+class Project < ApplicationRecord
   validates :name, :start_date, :duration, presence: true
 
   has_many :tasks

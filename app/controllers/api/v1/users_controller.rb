@@ -1,10 +1,16 @@
-class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_user!
+# frozen_string_literal: true
 
-  def assigned_projects
-    projects = current_user.projects.includes(:tasks).where('start_date <= ?', Date.current)
-    active_projects = projects.select { |project| project.end_date >= Date.current }
+module Api
+  module V1
+    class UsersController < ApplicationController
+      before_action :authenticate_user!
 
-    render json: active_projects, status: :ok
+      def assigned_projects
+        projects = current_user.projects.includes(:tasks).where('start_date <= ?', Date.current)
+        active_projects = projects.select { |project| project.end_date >= Date.current }
+
+        render json: active_projects, status: :ok
+      end
+    end
   end
 end
