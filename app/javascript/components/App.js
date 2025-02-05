@@ -4,6 +4,7 @@ import { isAuthenticated } from "../utils/auth";
 import Home from "./Home";
 import Login from "./Login";
 import ProjectList from "./ProjectList";
+import ProjectBreakdown from "./ProjectBreakdown";
 
 const ProtectedRoute = ({ element }) => {
     return isAuthenticated() ? element : <Navigate to="/login" />;
@@ -13,9 +14,12 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={!isAuthenticated() ? <Navigate to="/projects" /> : <Home /> } />
-                <Route path="/login" element={!isAuthenticated() ? <Navigate to="/projects" /> : <Login /> } />
+                <Route path="/" element={isAuthenticated() ? <Navigate to="/projects" /> : <Home />} />
+
+                <Route path="/login" element={isAuthenticated() ? <Navigate to="/projects" /> : <Login />} />
+
                 <Route path="/projects" element={<ProtectedRoute element={<ProjectList />} />} />
+                <Route path="/projects/:id" element={<ProtectedRoute element={<ProjectBreakdown />} />} />
             </Routes>
         </Router>
     );

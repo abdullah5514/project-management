@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getToken } from "../utils/auth";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {Link} from "react-router-dom";
 
 const ProjectList = () => {
     const [projects, setProjects] = useState([]);
@@ -32,15 +33,17 @@ const ProjectList = () => {
                 {projects.length > 0 ? (
                     projects.map((project) => (
                         <div key={project.id} className="col-md-4 mb-4">
-                            <div className="card shadow-sm border-primary">
-                                <div className="card-body">
-                                    <h5 className="card-title">{project.name}</h5>
-                                    <p className="card-text">
-                                        Start Date: {project.start_date} <br />
-                                        Duration: {project.duration}
-                                    </p>
+                            <Link to={`/projects/${project.id}`} className="text-decoration-none">
+                                <div className="card shadow-sm border-primary">
+                                    <div className="card-body">
+                                        <h5 className="card-title">{project.name}</h5>
+                                        <p className="card-text">
+                                            Start Date: {project.start_date} <br />
+                                            Duration: {project.duration}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     ))
                 ) : (
