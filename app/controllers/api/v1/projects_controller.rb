@@ -45,6 +45,8 @@ module Api
       # GET /api/v1/projects/:id/task_breakdown
       def task_breakdown
         tasks = @project.tasks.order(:start_time)
+        assigned_users = @project.users
+        available_users = User.where.not(id: assigned_users.ids)
 
         breakdown = tasks.map do |task|
           {
@@ -60,7 +62,9 @@ module Api
         render json: {
           project: @project.name,
           tasks: breakdown,
-          total_hours: "#{total_hours} hours"
+          total_hours: "#{total_hours} hours",
+          assigned_users: assigned_users.map { |user| { id: user.id, name: user.name } },
+          available_users: available_users.map { |user| { id: user.id, name: user.name } }
         }
       end
 
