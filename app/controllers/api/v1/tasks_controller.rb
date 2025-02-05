@@ -8,27 +8,21 @@ module Api
 
       # POST /api/v1/tasks
       def create
-        # Only allow task creation for active projects assigned to the current user
-        if @project.users.include?(current_user) && @project.active?
-          @task = @project.tasks.new(task_params)
-          @task.user = current_user
+        service = CreateTaskService.new(@project, current_user, task_params)
+        result = service.call
 
-          if @task.save
-            render json: @task, status: :created
-          else
-            render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
-          end
+        if result[:success]
+          render json: result[:task], status: :created
         else
-          render json: { error: 'You are not assigned to this project or the project is inactive.' }, status: :forbidden
+          render json: { error: result[:message] }, status: result[:message].include?('inactive') ? :forbidden : :unprocessable_entity
         end
       end
 
       private
 
       def set_project
-        @project = Project.find(params[:project_id])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Project not found' }, status: :not_found
+        @project = Project.find_by(id: params[:project_id])
+        render json: { error: 'Project not found' }, status: :not_found unless @project
       end
 
       def task_params
