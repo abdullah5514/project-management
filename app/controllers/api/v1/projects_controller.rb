@@ -5,7 +5,7 @@ module Api
   module V1
     class ProjectsController < ApplicationController
       before_action :authenticate_user!
-      before_action :authenticate_admin, only: %i[assign unassign task_breakdown]
+      before_action :authenticate_admin, only: %i[assign unassign]
       before_action :set_project, only: %i[assign unassign task_breakdown]
 
       # GET /api/v1/projects/active
