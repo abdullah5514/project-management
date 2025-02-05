@@ -1,38 +1,54 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getToken } from "../utils/auth";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProjectList = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const token = getToken();
 
-  // Fetch projects from Rails API
-  useEffect(() => {
-    axios
-      .get("/api/v1/projects")
-      .then((response) => {
-        setProjects(response.data);  // Save fetched data to state
-        setLoading(false);            // Stop loading
-      })
-      .catch((err) => {
-        setError(err);                // Handle error
-        setLoading(false);
-      });
-  }, []);
+    useEffect(() => {
+        axios
+            .get("/api/v1/projects", { headers: { Authorization: `Bearer ${token}` } })
+            .then((response) => {
+                setProjects(response.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(err);
+                setLoading(false);
+            });
+    }, [token]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+    if (loading) return <div className="text-center mt-5">Loading...</div>;
+    if (error) return <div className="text-danger text-center mt-5">Error: {error.message}</div>;
 
-  return (
-    <div>
-      <h2>Project List</h2>
-      <ul>
-      {projects.map((project) => (
-          <li key={project.id}>{project.name}</li> // Adjust according to your data structure
-        ))}
-      </ul>
-    </div>
-  );
+    return (
+        <div className="container mt-5">
+            <h2 className="text-center text-primary">Project List</h2>
+            <div className="row justify-content-center">
+                {projects.length > 0 ? (
+                    projects.map((project) => (
+                        <div key={project.id} className="col-md-4 mb-4">
+                            <div className="card shadow-sm border-primary">
+                                <div className="card-body">
+                                    <h5 className="card-title">{project.name}</h5>
+                                    <p className="card-text">
+                                        Start Date: {project.start_date} <br />
+                                        Duration: {project.duration}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center text-muted">No projects available</p>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default ProjectList;
