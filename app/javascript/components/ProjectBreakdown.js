@@ -76,7 +76,7 @@ const ProjectBreakdown = () => {
 
     return (
         <div className="container mt-5">
-            <h2 className="text-center text-primary">{project.project}</h2>
+            <h2 className="text-center text-primary">{project.project_name}</h2>
             <ul className="list-group mt-3">
                 {project.tasks.map((task, index) => (
                     <li key={index} className="list-group-item">

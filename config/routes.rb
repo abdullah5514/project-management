@@ -21,4 +21,5 @@ Rails.application.routes.draw do
       resources :tasks, only: [:create]
     end
   end
+  match '*path', to: redirect('/'), via: :all
 end
