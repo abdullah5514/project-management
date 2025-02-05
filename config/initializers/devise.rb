@@ -9,6 +9,7 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  #todo
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise_jwt_secret_key!
     jwt.expiration_time = 1.day.to_i
@@ -26,7 +27,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '9e2e6a59bdc3ea4d416045a0a53b7952cb3bcd2f5a0b1638cb2a802fa0d05f675a3401feec473bbff18931ca435b19ffd45061cce93c0a7c845e6c9dd1ed03dd'
+  # config.secret_key = ''
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
