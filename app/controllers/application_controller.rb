@@ -10,13 +10,11 @@ class ApplicationController < ActionController::API
 
   def current_user
     @current_user ||= begin
-      header = request.headers['Authorization']
-      token = header.split(' ').last if header
-      decoded = JWT.decode(token, Rails.application.credentials.devise_jwt_secret_key!).first
-      User.find(decoded['user_id'])
-    rescue StandardError
-      nil
-    end
+                        decoded = JwtService.new(request).decode_token
+                        User.find(decoded['user_id']) if decoded
+                      rescue JWT::DecodeError
+                        nil
+                      end
   end
 
   def authenticate_user!

@@ -28,7 +28,7 @@ const ProjectList = () => {
 
     return (
         <div className="container mt-5">
-            <h2 className="text-center text-primary">Project List</h2>
+            <h2 className="text-center text-primary">My Project List</h2>
             <div className="row justify-content-center">
                 {projects.length > 0 ? (
                     projects.map((project) => (
