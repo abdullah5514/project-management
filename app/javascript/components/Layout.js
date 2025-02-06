@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">
-                        Project Manager
+                        Project Tracker
                     </Link>
                     <button
                         className="navbar-toggler"
@@ -58,6 +58,12 @@ const Layout = ({ children }) => {
                                             Projects
                                         </Link>
                                     </li>
+                                    <li className="nav-item d-flex align-items-center ms-3">
+                                        <span className="badge bg-secondary text-uppercase px-3 py-2">
+                                            <strong>Role:</strong> {getUserRole()}
+                                        </span>
+                                    </li>
+
                                     <li className="nav-item">
                                         <button className="btn btn-danger ms-2" onClick={handleLogout}>
                                             Logout
