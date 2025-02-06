@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import {getUserRole, isAuthenticated} from "../utils/auth";
 import Home from "./Home";
+import Layout from "./Layout";
 import Login from "./Login";
 import ProjectList from "./ProjectList";
 import UserProjectList from "./UserProjectList";
@@ -9,19 +10,18 @@ import ProjectBreakdown from "./ProjectBreakdown";
 import UserProjectBreakdown from "./UserProjectBreakdown";
 
 const ProtectedRoute = ({ element }) => {
-    return isAuthenticated() ? element : <Navigate to="/login" />;
+    return isAuthenticated() ? <Layout>{element}</Layout> : <Navigate to="/login" />;
 };
 
 const App = () => {
     const userRole = getUserRole();
-
     return (
         <Router>
             <Routes>
                 <Route
                     path="/"
                     element={
-                        isAuthenticated() ? (
+                        (isAuthenticated() && userRole !== null) ? (
                             userRole === "user" ? (
                                 <Navigate to="/my-projects" /> // Redirect user to their own projects
                             ) : (
@@ -34,7 +34,7 @@ const App = () => {
                 />
                 <Route
                     path="/login"
-                    element={isAuthenticated() ? (
+                    element={(isAuthenticated() && userRole !== null) ? (
                         userRole === "user" ? (
                             <Navigate to="/my-projects" />
                         ) : (
